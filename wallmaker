@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Get the main monitor size
+SCREEN_SIZE=$(xrandr | grep -w primary | awk '{print $4}')
+SCREEN_WIDTH=$(echo $SCREEN_SIZE | cut -d 'x' -f 1)
+SCREEN_HEIGHT=$(echo $SCREEN_SIZE | cut -d 'x' -f 2)
+
+# Get the image size and color
+IMAGE_SIZE=$(identify -format "%wx%h" "$1")
+IMAGE_WIDTH=$(echo $IMAGE_SIZE | cut -d 'x' -f 1)
+IMAGE_HEIGHT=$(echo $IMAGE_SIZE | cut -d 'x' -f 2)
+IMAGE_COLOR=$(convert "$1" -gravity NorthWest -crop 2x2+0+0 -depth 8 txt: | grep -Eo '#\w{6}' | head -n 1)
+
+# Calculate the center coordinates
+CENTER_X=$((($SCREEN_WIDTH - $IMAGE_WIDTH) / 2))
+CENTER_Y=$((($SCREEN_HEIGHT - $IMAGE_HEIGHT) / 2))
+
+# Create the background image
+convert -size ${SCREEN_SIZE} xc:${IMAGE_COLOR} background.png
+
+# Compose the images
+composite -geometry +${CENTER_X}+${CENTER_Y} "$1" background.png output.png
