@@ -20,3 +20,6 @@ convert -size ${SCREEN_SIZE} xc:${IMAGE_COLOR} background.png
 
 # Compose the images
 composite -geometry +${CENTER_X}+${CENTER_Y} "$1" background.png output.png
+
+# Remove the background image
+rm background.png
