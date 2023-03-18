@@ -1,5 +1,7 @@
 # wallmake
 
+![Wallpaper Maker](https://pixteller.com/images/tools/thumbs/Wallpaper-Maker.png "Wallpaper Maker")
+
 WallMake is a set of scripts that allow you to create a desktop wallpaper from any image, matching the size of your main monitor and with the average color of the four corners of the original image as the fill color.
 
 ## wallmake.py
